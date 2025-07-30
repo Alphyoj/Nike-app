@@ -1,0 +1,62 @@
+name: nike_app
+description: "A new Flutter project."
+
+publish_to: 'none' 
+
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  google_fonts: ^4.0.4
+  firebase_core: ^2.27.0
+  firebase_auth: ^4.17.0 
+  cloud_firestore: ^4.15.0 
+  firebase_storage: ^11.7.0
+  provider: ^6.1.1
+  http: ^1.4.0
+
+
+
+  flutter_lints: ^5.0.0
+
+
+flutter:
+
+
+  uses-material-design: true
+
+  assets:
+    - lib/assets/splash.jpg
+    - lib/assets/men.jpg
+    - lib/assets/women.jpg
+    - lib/assets/boy.jpg
+    - lib/assets/girl.jpg
+    - lib/assets/Group 774.png
+    - lib/assets/nike_logo_white.png
+    - lib/assets/nike_logo.png
+    - lib/assets/nike_bg.jpg
+    - lib/assets/jordan.png
+    - lib/assets/nike_black.png
+    - lib/assets/google.png
+    - lib/assets/facebook.png
+    - lib/assets/apple.png
+    - lib/assets/s1.jpg
+    - lib/assets/s2.png
+    - lib/assets/s3.jpg
+    - lib/assets/promo1.png
+    - lib/assets/promo2.jpg
+    - lib/assets/promo3.jpg
+    - lib/assets/promo4.jpg

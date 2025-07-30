@@ -1,0 +1,41 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "nikeapp-13704",
+          "appId": "1:106631481866:android:c3d90e03697c7c4fc8adf3",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "nikeapp-13704",
+          "configurations": {
+            "android": "1:106631481866:android:c3d90e03697c7c4fc8adf3",
+            "ios": "1:106631481866:ios:4f255eaae34a12fdc8adf3",
+            "macos": "1:106631481866:ios:4f255eaae34a12fdc8adf3",
+            "web": "1:106631481866:web:e6d7c2f63fdfb9e6c8adf3",
+            "windows": "1:106631481866:web:9bc07d2b181a7d3bc8adf3"
+          }
+        }
+      }
+    }
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ],
+      "predeploy": [
+        "npm --prefix \"$RESOURCE_DIR\" run lint"
+      ]
+    }
+  ]
+}
