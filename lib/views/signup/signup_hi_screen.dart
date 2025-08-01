@@ -15,19 +15,19 @@ class _SignupSuccessScreen1State extends State<SignupSuccessScreen1> {
   void initState() {
     super.initState();
 
-    // Navigate to HiNikeSplash1 after 1 second
+  
     Future.delayed(const Duration(milliseconds: 1000), () {
       Navigator.of(context).push(_createRouteToHiNikeSplash1());
     });
   }
 
-  // Custom animation route
+
   Route _createRouteToHiNikeSplash1() {
     return PageRouteBuilder(
       transitionDuration: const Duration(milliseconds: 300),
       pageBuilder: (context, animation, secondaryAnimation) => const HiNikeSplash1(),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        // Smart animate: fade + slide (or modify as needed)
+      
         const begin = Offset(0.0, 0.1);
         const end = Offset.zero;
         final tween = Tween(begin: begin, end: end);

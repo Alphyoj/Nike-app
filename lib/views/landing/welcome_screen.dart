@@ -11,7 +11,7 @@ class NikeWelcomeScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          // Background Image
+          
           SizedBox.expand(
             child: Image.asset(
               'lib/assets/nike_bg.jpg',
@@ -19,7 +19,7 @@ class NikeWelcomeScreen extends StatelessWidget {
             ),
           ),
 
-          // Nike Logo
+          
           Positioned(
             top: 508,
             left: 20,
@@ -31,7 +31,7 @@ class NikeWelcomeScreen extends StatelessWidget {
             ),
           ),
 
-          // Description Text
+         
           Positioned(
             top: 555,
             left: 20,
@@ -43,20 +43,20 @@ class NikeWelcomeScreen extends StatelessWidget {
                 style: GoogleFonts.poppins(
                   color: Colors.white,
                   fontSize: 20,
-                  height: 1.5, // line height of 30px
+                  height: 1.5,
                   fontWeight: FontWeight.w400,
                 ),
               ),
             ),
           ),
 
-          // Buttons
+        
           Positioned(
             top: 675,
             left: 20,
             child: Row(
               children: [
-                // Sign Up Button
+                
                 SizedBox(
                   width: 106,
                   height: 42,
@@ -89,7 +89,7 @@ class NikeWelcomeScreen extends StatelessWidget {
 
                 const SizedBox(width: 8), 
 
-                // Sign In Button
+               
                 SizedBox(
                   width: 106,
                   height: 42,

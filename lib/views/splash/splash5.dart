@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:nike_app/views/screens/home_screen.dart';
+
 
 class HiNikeSplash5 extends StatefulWidget {
   const HiNikeSplash5({super.key});
@@ -26,11 +28,30 @@ class _HiNikeSplash5State extends State<HiNikeSplash5> with SingleTickerProvider
     );
 
     _controller.forward();
+
+    
+    Future.delayed(const Duration(milliseconds: 1100), () {
+      Navigator.of(context).pushReplacement(
+        PageRouteBuilder(
+          transitionDuration: const Duration(milliseconds: 300),
+          pageBuilder: (context, animation, secondaryAnimation) => const HomeScreen(),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return FadeTransition(
+              opacity: CurvedAnimation(
+                parent: animation,
+                curve: Curves.easeIn,
+              ),
+              child: child,
+            );
+          },
+        ),
+      );
+    });
   }
 
   @override
   void dispose() {
-    _controller.dispose(); // Always dispose your animation controller
+    _controller.dispose();
     super.dispose();
   }
 

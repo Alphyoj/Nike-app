@@ -136,7 +136,7 @@ class HiNikeSplash4 extends StatelessWidget {
             left: scaleX(20),
             child: GestureDetector(
               onTap: () {
-                // Add navigation or logic here
+              
               },
               child: const Text(
                 "Learn more",

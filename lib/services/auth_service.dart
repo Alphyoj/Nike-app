@@ -3,9 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  late String _verificationId; // late so it's non-nullable after codeSent
+  late String _verificationId; 
 
-  /// Starts phone number verification
+ 
   Future<void> verifyPhoneNumber({
     required String phoneNumber,
     required Function(String) onCodeSent,
@@ -29,7 +29,7 @@ class AuthService {
     );
   }
 
-  /// Signs in using the received OTP
+ 
   Future<User?> signInWithOtp(String smsCode) async {
     try {
       if (smsCode.trim().isEmpty) throw FirebaseAuthException(code: 'empty-code', message: 'OTP is empty');
@@ -42,15 +42,15 @@ class AuthService {
       UserCredential userCredential = await _auth.signInWithCredential(credential);
       return userCredential.user;
     } catch (e) {
-      rethrow; // Pass error to caller
+      rethrow; 
     }
   }
 
-  /// Optional: Sign out method
+
   Future<void> signOut() async {
     await _auth.signOut();
   }
 
-  /// Get current user
+ 
   User? get currentUser => _auth.currentUser;
 }

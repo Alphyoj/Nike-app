@@ -11,7 +11,7 @@ class SignupSuccessScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          // Nike Logo
+        
           Positioned(
             top: 99,
             left: 20,
@@ -22,7 +22,6 @@ class SignupSuccessScreen extends StatelessWidget {
             ),
           ),
 
-          // Jordan Logo
           Positioned(
             top: 89,
             left: 71,
@@ -52,7 +51,7 @@ class SignupSuccessScreen extends StatelessWidget {
             ),
           ),
 
-          // Continue Button
+       
           Positioned(
             top: 297,
             left: 237,

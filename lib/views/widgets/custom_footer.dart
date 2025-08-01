@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:nike_app/utils/app_colors.dart'; // Ensure this path is correct
+import 'package:nike_app/utils/app_colors.dart';
+
+import 'package:nike_app/views/screens/home_screen.dart';
+import 'package:nike_app/views/screens/mwk_screen.dart'; 
 
 class CustomFooter extends StatelessWidget {
   final double screenWidth;
@@ -10,38 +13,58 @@ class CustomFooter extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: screenWidth,
-      height: 80, // Fixed height for the footer
+      height: 80,
       decoration: BoxDecoration(
-        color: AppColors.white, // Footer background
+        color: AppColors.white,
         boxShadow: [
           BoxShadow(
             color: AppColors.black.withOpacity(0.1),
             blurRadius: 10,
-            offset: const Offset(0, -5), // Shadow at the top of the footer
+            offset: const Offset(0, -5),
           ),
         ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildFooterIcon(Icons.home_outlined, 45, true), // Home
-          _buildFooterIcon(Icons.shopping_bag_outlined, 112), // Shopping Bag
-          _buildFooterIcon(Icons.favorite_border, 177), // Heart
-          _buildFooterIcon(Icons.shopping_cart_outlined, 244), // Cart
-          _buildFooterIcon(Icons.person_outline, 312), // Person
+          _buildFooterIcon(context, Icons.home_outlined, () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+            );
+          }, true), 
+
+          _buildFooterIcon(context, Icons.shopping_bag_outlined, () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const MwkScreen()),
+            );
+          }), 
+
+          _buildFooterIcon(context, Icons.favorite_border, () {
+            
+          }),
+
+          _buildFooterIcon(context, Icons.shopping_cart_outlined, () {
+            
+          }),
+
+          _buildFooterIcon(context, Icons.person_outline, () {
+          
+          }),
         ],
       ),
     );
   }
 
-  Widget _buildFooterIcon(IconData icon, double leftPosition, [bool isSelected = false]) {
-    // The provided design uses fixed left positions, but for a responsive row,
-    // MainAxisAlignment.spaceAround or .spaceBetween is better.
-    // The sizes are also somewhat consistent, so we can use dynamic sizing based on screenWidth.
-    return Icon(
-      icon,
-      size: screenWidth * 0.06, // Roughly 20-22px / 375px
-      color: isSelected ? AppColors.background : AppColors.hintText, // Example for selected state
+  Widget _buildFooterIcon(BuildContext context, IconData icon, VoidCallback onTap, [bool isSelected = false]) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Icon(
+        icon,
+        size: screenWidth * 0.06,
+        color: isSelected ? AppColors.background : AppColors.hintText,
+      ),
     );
   }
 }

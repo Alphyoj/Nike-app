@@ -15,7 +15,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
   void initState() {
     super.initState();
 
-    // Auto-navigate to NikeWelcomeScreen after 1 second with fade animation
+
     Future.delayed(const Duration(milliseconds: 1000), () {
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
@@ -35,12 +35,12 @@ class _LoadingScreenState extends State<LoadingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF130329), // Dark purple background
+      backgroundColor: const Color(0xFF130329), 
       body: Center(
         child: Stack(
           alignment: Alignment.center,
           children: [
-            // Circular white spinner
+          
             SizedBox(
               width: 114,
               height: 114,

@@ -19,16 +19,16 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 139,
-      height: 240,
+      width: 150,
+      height: 250,
       margin: const EdgeInsets.only(right: 12),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: AppColors.black.withOpacity(0.1),
-            blurRadius: 8,
+            color: AppColors.black.withOpacity(0.08),
+            blurRadius: 10,
             offset: const Offset(0, 4),
           ),
         ],
@@ -36,57 +36,61 @@ class ProductCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            margin: const EdgeInsets.all(8),
-            width: 132,
-            height: 170,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Stack(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
+          Stack(
+            children: [
+              Container(
+                margin: const EdgeInsets.all(10),
+                width: double.infinity,
+                height: 160,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: AppColors.background.withOpacity(0.05),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
                   child: Image.network(
                     imageUrl,
+                    fit: BoxFit.cover,
                     width: double.infinity,
                     height: double.infinity,
-                    fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) =>
                         const Center(child: Icon(Icons.broken_image)),
                   ),
                 ),
-                Positioned(
-                  top: 4,
-                  right: 4,
-                  child: Container(
-                    width: 28,
-                    height: 28,
-                    decoration: BoxDecoration(
-                      color: AppColors.white.withOpacity(0.8),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Center(
-                      child: Icon(
-                        Icons.favorite_border,
-                        size: 16,
-                        color: AppColors.background,
+              ),
+              Positioned(
+                top: 14,
+                right: 14,
+                child: Container(
+                  padding: const EdgeInsets.all(6),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.9),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 4,
                       ),
-                    ),
+                    ],
+                  ),
+                  child: const Icon(
+                    Icons.favorite_border,
+                    size: 18,
+                    color: Colors.black,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   productName,
                   style: GoogleFonts.poppins(
-                    fontSize: 13,
+                    fontSize: 14,
                     fontWeight: FontWeight.w600,
                     color: AppColors.black,
                   ),
@@ -101,19 +105,15 @@ class ProductCard extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                     color: AppColors.hintText,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'MRP : ₹ ${price.toStringAsFixed(2)}',
+                  'MRP : ₹${price.toStringAsFixed(2)}',
                   style: GoogleFonts.poppins(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,
                     color: AppColors.black,
                   ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),
