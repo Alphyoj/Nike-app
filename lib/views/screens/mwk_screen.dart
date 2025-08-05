@@ -241,7 +241,8 @@ _buildBrandCategoryGrid(),
             Positioned(
               bottom: 0,
               left: 0,
-              child: CustomFooter(screenWidth: screenWidth),
+              child: CustomFooter(screenWidth: screenWidth, currentIndex: 1),
+
             ),
           ],
         ),

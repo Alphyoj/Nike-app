@@ -1,23 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nike_app/model/product.dart';
 import 'package:nike_app/utils/app_colors.dart';
+import 'package:nike_app/providers/favorites_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProductCard extends StatelessWidget {
-  final String imageUrl;
-  final String productName;
-  final String category;
-  final num price;
+  final Product product;
 
-  const ProductCard({
-    super.key,
-    required this.imageUrl,
-    required this.productName,
-    required this.category,
-    required this.price,
-  });
+  const ProductCard({super.key, required this.product, required String imageUrl, required String productName, required String category, required num price});
 
   @override
   Widget build(BuildContext context) {
+    final favoritesProvider = Provider.of<FavoritesProvider>(context);
+    final isFav = favoritesProvider.isFavorite(product);
+
     return Container(
       width: 150,
       height: 250,
@@ -49,7 +46,7 @@ class ProductCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.network(
-                    imageUrl,
+                    product.thumbnail,
                     fit: BoxFit.cover,
                     width: double.infinity,
                     height: double.infinity,
@@ -61,22 +58,25 @@ class ProductCard extends StatelessWidget {
               Positioned(
                 top: 14,
                 right: 14,
-                child: Container(
-                  padding: const EdgeInsets.all(6),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.9),
-                    shape: BoxShape.circle,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 4,
-                      ),
-                    ],
-                  ),
-                  child: const Icon(
-                    Icons.favorite_border,
-                    size: 18,
-                    color: Colors.black,
+                child: GestureDetector(
+                  onTap: () => favoritesProvider.toggleFavorite(product),
+                  child: Container(
+                    padding: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 4,
+                        ),
+                      ],
+                    ),
+                    child: Icon(
+                      isFav ? Icons.favorite : Icons.favorite_border,
+                      size: 18,
+                      color: isFav ? Colors.orange : Colors.black,
+                    ),
                   ),
                 ),
               ),
@@ -88,7 +88,7 @@ class ProductCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  productName,
+                  product.title,
                   style: GoogleFonts.poppins(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -99,7 +99,7 @@ class ProductCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  category,
+                  product.category,
                   style: GoogleFonts.poppins(
                     fontSize: 12,
                     fontWeight: FontWeight.w400,
@@ -108,7 +108,7 @@ class ProductCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'MRP : ₹${price.toStringAsFixed(2)}',
+                  'MRP : ₹${product.price.toStringAsFixed(2)}',
                   style: GoogleFonts.poppins(
                     fontSize: 13,
                     fontWeight: FontWeight.w500,

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nike_app/utils/app_colors.dart';
-
+import 'package:nike_app/views/screens/favorite_screen.dart';
 import 'package:nike_app/views/screens/home_screen.dart';
-import 'package:nike_app/views/screens/mwk_screen.dart'; 
+import 'package:nike_app/views/screens/mwk_screen.dart';
 
 class CustomFooter extends StatelessWidget {
   final double screenWidth;
+  final int currentIndex; // 0 = Home, 1 = MWK, 2 = Favorites, etc.
 
-  const CustomFooter({super.key, required this.screenWidth});
+  const CustomFooter({super.key, required this.screenWidth, required this.currentIndex});
 
   @override
   Widget build(BuildContext context) {
@@ -27,43 +28,49 @@ class CustomFooter extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          _buildFooterIcon(context, Icons.home_outlined, () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
-          }, true), 
-
-          _buildFooterIcon(context, Icons.shopping_bag_outlined, () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const MwkScreen()),
-            );
-          }), 
-
-          _buildFooterIcon(context, Icons.favorite_border, () {
-            
+          _buildFooterIcon(context, Icons.home_outlined, 0, () {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomeScreen()));
           }),
-
-          _buildFooterIcon(context, Icons.shopping_cart_outlined, () {
-            
+          _buildFooterIcon(context, Icons.shopping_bag_outlined, 1, () {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const MwkScreen()));
           }),
-
-          _buildFooterIcon(context, Icons.person_outline, () {
-          
+          _buildFooterIcon(context, Icons.favorite_border, 2, () {
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => FavoritesPage()));
+          }),
+          _buildFooterIcon(context, Icons.shopping_cart_outlined, 3, () {
+            // Cart action here
+          }),
+          _buildFooterIcon(context, Icons.person_outline, 4, () {
+            // Profile action here
           }),
         ],
       ),
     );
   }
 
-  Widget _buildFooterIcon(BuildContext context, IconData icon, VoidCallback onTap, [bool isSelected = false]) {
+  Widget _buildFooterIcon(BuildContext context, IconData icon, int index, VoidCallback onTap) {
+    final bool isSelected = index == currentIndex;
+
     return GestureDetector(
       onTap: onTap,
-      child: Icon(
-        icon,
-        size: screenWidth * 0.06,
-        color: isSelected ? AppColors.background : AppColors.hintText,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            icon,
+            size: screenWidth * 0.06,
+            color: isSelected ? AppColors.background : AppColors.hintText,
+          ),
+          const SizedBox(height: 4),
+          Container(
+            width: 25,
+            height: 3,
+            decoration: BoxDecoration(
+              color: isSelected ? AppColors.background : Colors.transparent,
+              borderRadius: BorderRadius.circular(2),
+            ),
+          ),
+        ],
       ),
     );
   }

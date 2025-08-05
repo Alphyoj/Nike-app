@@ -321,7 +321,8 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            CustomFooter(screenWidth: screenWidth),
+            CustomFooter(screenWidth: screenWidth, currentIndex: 0),
+
           ],
         ),
       ),
@@ -387,30 +388,35 @@ class HomeScreen extends StatelessWidget {
   }
 
 Widget _buildTopPicksSection(double screenWidth) {
+  const double sectionHeight = 260;
+
   return FutureBuilder<List<Product>>(
     future: ApiService.fetchShoes(),
     builder: (context, snapshot) {
       if (snapshot.connectionState == ConnectionState.waiting) {
         return const SizedBox(
-          height: 260,
+          height: sectionHeight,
           child: Center(child: CircularProgressIndicator()),
         );
-      } else if (snapshot.hasError) {
+      }
+
+      if (snapshot.hasError) {
         return SizedBox(
-          height: 260,
+          height: sectionHeight,
           child: Center(child: Text('Error: ${snapshot.error}')),
         );
-      } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+      }
+
+      final products = snapshot.data;
+      if (products == null || products.isEmpty) {
         return const SizedBox(
-          height: 260,
+          height: sectionHeight,
           child: Center(child: Text('No products available')),
         );
       }
 
-      final products = snapshot.data!;
-
       return SizedBox(
-        height: 260,
+        height: sectionHeight,
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
           padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
@@ -418,6 +424,7 @@ Widget _buildTopPicksSection(double screenWidth) {
           separatorBuilder: (_, __) => const SizedBox(width: 12),
           itemBuilder: (context, index) {
             final product = products[index];
+
             return GestureDetector(
               onTap: () {
                 Navigator.push(
@@ -432,6 +439,7 @@ Widget _buildTopPicksSection(double screenWidth) {
                 productName: product.title,
                 category: product.category,
                 price: product.price,
+                product: product,
               ),
             );
           },
@@ -440,6 +448,7 @@ Widget _buildTopPicksSection(double screenWidth) {
     },
   );
 }
+
 
 
   Widget _buildPromoImageCard(String imageAsset) {
@@ -529,7 +538,7 @@ Widget _buildTopPicksSection(double screenWidth) {
   Widget _buildStoriesForYouCard(
       String imageAsset, String subtitle, String title, String buttonText) {
     return Container(
-      width: 336,
+      width: 347,
       height: 300,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(34),
@@ -548,12 +557,12 @@ Widget _buildTopPicksSection(double screenWidth) {
           children: [
             Image.asset(
               imageAsset,
-              width: 336,
+              width: 347,
               height: 300,
               fit: BoxFit.cover,
             ),
             Container(
-              width: 336,
+              width: 347,
               height: 300,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
