@@ -1,10 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nike_app/model/product.dart';
 import 'package:nike_app/services/api_service.dart';
 import 'package:nike_app/utils/app_colors.dart';
+import 'package:nike_app/views/screens/bag_screen.dart';
 import 'package:nike_app/views/widgets/product_card.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:nike_app/providers/cart_provider.dart'; 
+import 'package:provider/provider.dart';
 
 class ShoeDetailPage extends StatefulWidget {
   final Product product;
@@ -24,6 +27,26 @@ class _ShoeDetailPageState extends State<ShoeDetailPage> {
   void dispose() {
     _pageController.dispose();
     super.dispose();
+  }
+
+  void _addToBag(BuildContext context) {
+    // Access the CartProvider and add the current product
+    final cartProvider = Provider.of<CartProvider>(context, listen: false);
+    cartProvider.addToCart(widget.product);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text("${widget.product.title} added to bag!"),
+        duration: const Duration(seconds: 1),
+      ),
+    );
+  }
+
+  void _navigateToBagPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const BagPage()),
+    );
   }
 
   @override
@@ -71,11 +94,9 @@ class _ShoeDetailPageState extends State<ShoeDetailPage> {
                           right: 0,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children:
-                                List.generate(product.images.length, (index) {
+                            children: List.generate(product.images.length, (index) {
                               return Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 4),
+                                margin: const EdgeInsets.symmetric(horizontal: 4),
                                 width: 10,
                                 height: 10,
                                 decoration: BoxDecoration(
@@ -91,52 +112,63 @@ class _ShoeDetailPageState extends State<ShoeDetailPage> {
                         Positioned(
                           top: 28,
                           left: 286,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.25),
-                                  blurRadius: 2,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            
-                            child: const Icon(
-                              Icons.shopping_cart_outlined,
-                              size: 22,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          top: 82,
-                          left: 286,
-                          child: Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.black.withOpacity(0.25),
-                                  blurRadius: 2,
-                                  offset: const Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: const Icon(
-                              Icons.share_outlined,
-                              size: 22,
-                              color: Colors.black,
+                          child: GestureDetector(
+                            onTap: () => _navigateToBagPage(context),
+                            child: Container(
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withOpacity(0.25),
+                                    blurRadius: 2,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                              ),
+                              child: const Icon(
+                                Icons.shopping_cart_outlined,
+                                size: 22,
+                                color: Colors.black,
+                              ),
                             ),
                           ),
                         ),
+                       Positioned(
+  top: 82,
+  left: 286,
+  child: GestureDetector(
+    onTap: () {
+      Share.share(
+        'Check out this cool Nike shoe from the app! 👟 https://nike.com/product/12345',
+        subject: 'Nike Shoe Recommendation',
+      );
+    },
+    child: Container(
+      width: 40,
+      height: 40,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.25),
+            blurRadius: 2,
+            offset: const Offset(0, 2),
+          ),
+        ],
+      ),
+      child: const Icon(
+        Icons.share_outlined,
+        size: 22,
+        color: Colors.black,
+      ),
+    ),
+  ),
+),
+
                       ],
                     ),
                   ),
@@ -352,66 +384,65 @@ class _ShoeDetailPageState extends State<ShoeDetailPage> {
             ),
           ),
 
-         // --- FIXED FOOTER ---
-Positioned(
-  bottom: 0,
-  left: 0,
-  right: 0,
-  child: Container(
-    color: Colors.white,
-    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-    child: Row(
-      children: [
-        Expanded(
-          child: SizedBox(
-            height: 64,
-            child: TextButton(
-              onPressed: () {},
-              style: TextButton.styleFrom(
-                backgroundColor: AppColors.btncolor,
-                shape: RoundedRectangleBorder(
-                  
-                ),
-              ),
-              child: Text(
-                "Add to Bag",
-                style: GoogleFonts.poppins(
-                  color: Colors.white,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
+          // --- FIXED FOOTER ---
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              color: Colors.white,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: SizedBox(
+                      height: 64,
+                      child: TextButton(
+                        onPressed: () => _addToBag(context), // Call _addToBag
+                        style: TextButton.styleFrom(
+                          backgroundColor: AppColors.btncolor,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          "Add to Bag",
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                    child: SizedBox(
+                      height: 64,
+                      child: TextButton(
+                        onPressed: () {},
+                        style: TextButton.styleFrom(
+                          backgroundColor: Colors.grey[200],
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                        ),
+                        child: Text(
+                          "Buy Now",
+                          style: GoogleFonts.poppins(
+                            color: Colors.black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
-        ),
-        const SizedBox(width: 8), 
-        Expanded(
-          child: SizedBox(
-            height: 64,
-            child: TextButton(
-              onPressed: () {},
-              style: TextButton.styleFrom(
-                backgroundColor: Colors.grey[200],
-                shape: RoundedRectangleBorder(
-                 
-                ),
-              ),
-              child: Text(
-                "Buy Now",
-                style: GoogleFonts.poppins(
-                  color: Colors.black,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    ),
-  ),
-),
-
 
           // --- HEADER BAR ---
           Positioned(

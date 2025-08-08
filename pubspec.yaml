@@ -30,6 +30,8 @@ dev_dependencies:
   sqflite: ^2.3.2
   path_provider: ^2.1.2
   path: ^1.8.3
+  share_plus: ^7.2.1
+  image_picker: ^1.1.0
 
 
 
@@ -94,6 +96,11 @@ flutter:
     - lib/assets/q3.jpg
     - lib/assets/q4.jpg
     - lib/assets/q5.jpg
+    - lib/assets/paypal.png
+    - lib/assets/gpay.png
+    - lib/assets/phonepe.png
+    - lib/assets/paytm.png
+    - lib/assets/pa.png
     
 
 

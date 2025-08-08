@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:nike_app/utils/app_colors.dart';
+import 'package:nike_app/views/screens/bag_screen.dart';
 import 'package:nike_app/views/screens/favorite_screen.dart';
 import 'package:nike_app/views/screens/home_screen.dart';
 import 'package:nike_app/views/screens/mwk_screen.dart';
+import 'package:nike_app/views/screens/profile_screen.dart';
 
 class CustomFooter extends StatelessWidget {
   final double screenWidth;
-  final int currentIndex; // 0 = Home, 1 = MWK, 2 = Favorites, etc.
+  final int currentIndex; 
 
   const CustomFooter({super.key, required this.screenWidth, required this.currentIndex});
 
@@ -38,10 +40,10 @@ class CustomFooter extends StatelessWidget {
             Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => FavoritesPage()));
           }),
           _buildFooterIcon(context, Icons.shopping_cart_outlined, 3, () {
-            // Cart action here
+             Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => BagPage()));
           }),
           _buildFooterIcon(context, Icons.person_outline, 4, () {
-            // Profile action here
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => ProfileScreen()));
           }),
         ],
       ),
